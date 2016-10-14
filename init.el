@@ -5,7 +5,6 @@
 ;; This is Tennix's Emacs configuration.
 ;; The latest version can be found at https://github.com/tennix/emacs.d
 
-
 ;;; Code:
 (setq package-archives
       '(;; ("gnu" . "http://elpa.gnu.org/packages/")
@@ -16,11 +15,9 @@
 	("melpa" . "http://elpa.zilongshanren.com/melpa/")))
 (package-initialize)
 
-
 ;;; Emacs auto generated customization file
 (setq custom-file "~/.emacs.d/custom.el")
 (load custom-file)
-
 
 ;;; some good default settings
 (fset 'yes-or-no-p 'y-or-n-p)
@@ -34,7 +31,6 @@
 	      initial-scratch-message ""
 	      ediff-split-window-function 'split-window-horizontally
 	      ediff-window-setup-function 'ediff-setup-windows-plain)
-
 
 ;;; prettify symbol mode,
 ;;; Eg: lambda will be replaced by Greek letter lambda
@@ -154,7 +150,6 @@
   (package-install 'diminish))
 (require 'use-package)
 (setq use-package-always-ensure t)
-
 
 ;;; Read environment variable from shell config
 (use-package exec-path-from-shell
@@ -470,66 +465,66 @@
 
 
 ;;; Python
-(use-package elpy
-  :defer t
-  :init (add-hook 'python-mode-hook 'elpy))
+; (use-package elpy
+;   :defer t
+;   :init (add-hook 'python-mode-hook 'elpy))
 
 
-;;; Haskell
-(use-package haskell-mode
-  :bind (:map haskell-mode-map
-	      ("C-c C-l" . haskell-process-load-or-reload)
-	      ("C-c C-t" . haskell-process-do-type)
-	      ("C-c C-i" . haskell-process-do-info)
-	      ("C-c C-c" . haskell-process-cabal-build)
-	      ("C-c c" . haskell-process-cabal)
-	      ("M-." . haskell-mode-jump-to-def))
-  :config
-  (add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
-  (add-hook 'haskell-mode-hook 'intero-mode))
-(use-package intero :defer t)
+; ;;; Haskell
+; (use-package haskell-mode
+;   :bind (:map haskell-mode-map
+; 	      ("C-c C-l" . haskell-process-load-or-reload)
+; 	      ("C-c C-t" . haskell-process-do-type)
+; 	      ("C-c C-i" . haskell-process-do-info)
+; 	      ("C-c C-c" . haskell-process-cabal-build)
+; 	      ("C-c c" . haskell-process-cabal)
+; 	      ("M-." . haskell-mode-jump-to-def))
+;   :config
+;   (add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
+;   (add-hook 'haskell-mode-hook 'intero-mode))
+; (use-package intero :defer t)
 
 
 ;;; OCaml
-(use-package tuareg
-  :defer t
-  :config
-  (add-hook 'tuareg-mode-hook 'merlin-mode)
-  (add-hook 'tuareg-mode-hook 'utop-minor-mode)
-  (add-hook 'tuareg-mode-hook 'ocp-indent-caml-mode-setup))
-(use-package ocp-indent :defer t
-  :config (setq ocp-indent-path "~/.opam/system/bin/ocp-indent"))
-(use-package merlin
-  :defer t
-  :config
-  (setq merlin-command "~/.opam/system/bin/ocamlmerlin")
-  (with-eval-after-load 'company
-    (add-to-list 'company-backends 'merlin-company-backend))
-  (add-hook 'merlin-mode-hook 'company-mode))
-(use-package utop
-  :config (setq utop-command "opam config exec -- utop -emacs"))
+; (use-package tuareg
+;   :defer t
+;   :config
+;   (add-hook 'tuareg-mode-hook 'merlin-mode)
+;   (add-hook 'tuareg-mode-hook 'utop-minor-mode)
+;   (add-hook 'tuareg-mode-hook 'ocp-indent-caml-mode-setup))
+; (use-package ocp-indent :defer t
+;   :config (setq ocp-indent-path "~/.opam/system/bin/ocp-indent"))
+; (use-package merlin
+;   :defer t
+;   :config
+;   (setq merlin-command "~/.opam/system/bin/ocamlmerlin")
+;   (with-eval-after-load 'company
+;     (add-to-list 'company-backends 'merlin-company-backend))
+;   (add-hook 'merlin-mode-hook 'company-mode))
+; (use-package utop
+;   :config (setq utop-command "opam config exec -- utop -emacs"))
 
 
 ;;; Scheme
-(use-package geiser :defer t)
-(use-package racket-mode :defer t)
+; (use-package geiser :defer t)
+; (use-package racket-mode :defer t)
 
 
 ;;; Lisp
-(use-package slime-company :defer t)
-(use-package slime
-  :defer t
-  :config
-  (setq slime-contribs '(slime-fancy slime-company))
-  (when (executable-find "sbcl")
-    (add-to-list 'slime-lisp-implementations
-		 '(sbcl ("sbcl") :coding-system utf-8-unix)))
-  (when (executable-find "lisp")
-    (add-to-list 'slime-lisp-implementations
-		 '(cmucl ("lisp") :coding-system iso-latin-1-unix)))
-  (when (executable-find "ccl")
-    (add-to-list 'slime-lisp-implementations
-		 '(ccl ("ccl") :coding-system utf-8-unix))))
+; (use-package slime-company :defer t)
+; (use-package slime
+;   :defer t
+;   :config
+;   (setq slime-contribs '(slime-fancy slime-company))
+;   (when (executable-find "sbcl")
+;     (add-to-list 'slime-lisp-implementations
+; 		 '(sbcl ("sbcl") :coding-system utf-8-unix)))
+;   (when (executable-find "lisp")
+;     (add-to-list 'slime-lisp-implementations
+; 		 '(cmucl ("lisp") :coding-system iso-latin-1-unix)))
+;   (when (executable-find "ccl")
+;     (add-to-list 'slime-lisp-implementations
+; 		 '(ccl ("ccl") :coding-system utf-8-unix))))
 
 
 ;;; Go
@@ -587,24 +582,24 @@
 (use-package typescript-mode
   :defer t
   :config (add-hook 'typescript-mode-hook #'tide-mode))
-(use-package coffee-mode
-  :defer t
-  :config (setq coffee-tab-width 2))
+; (use-package coffee-mode
+;   :defer t
+;   :config (setq coffee-tab-width 2))
 
 
-(use-package erlang :defer t)
-(use-package elixir-mode :defer t)
-(use-package nim-mode :defer t)
-(use-package julia-mode :defer t)
-(use-package sml-mode :defer t)
-(use-package idris-mode :defer t)
-(use-package scala-mode :defer t)
-(use-package kotlin-mode :defer t)
-(use-package d-mode :defer t
-  :mode (("\\.d[i]?\\'" . d-mode)))
-(use-package fstar-mode :defer t
-  :mode (("\\.fst\\'" . fstar-mode)
-	 ("\\.fsi\\'" . fstar-mode))
-  :config (setq fstar-executable "~/bin/fstar.exe"))
+; (use-package erlang :defer t)
+; (use-package elixir-mode :defer t)
+; (use-package nim-mode :defer t)
+; (use-package julia-mode :defer t)
+; (use-package sml-mode :defer t)
+; (use-package idris-mode :defer t)
+; (use-package scala-mode :defer t)
+; (use-package kotlin-mode :defer t)
+; (use-package d-mode :defer t
+; :mode (("\\.d[i]?\\'" . d-mode)))
+; (use-package fstar-mode :defer t
+;   :mode (("\\.fst\\'" . fstar-mode)
+; 	 ("\\.fsi\\'" . fstar-mode))
+;   :config (setq fstar-executable "~/bin/fstar.exe"))
 
 ;;; init.el ends here
