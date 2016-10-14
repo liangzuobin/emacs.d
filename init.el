@@ -16,8 +16,8 @@
 (package-initialize)
 
 ;;; Emacs auto generated customization file
-(setq custom-file "~/.emacs.d/custom.el")
-(load custom-file)
+; (setq custom-file "~/.emacs.d/custom.el")
+; (load custom-file)
 
 ;;; some good default settings
 (fset 'yes-or-no-p 'y-or-n-p)
@@ -36,21 +36,17 @@
 ;;; Eg: lambda will be replaced by Greek letter lambda
 (global-prettify-symbols-mode)
 
-
 ;;; builtin parenthesis editing
 ;; (electric-pair-mode) ;; replaced with smartparens-mode
 (show-paren-mode t)	;; faster than show-smartparens-mode
 
-
 ;;; subword mode for prog-mode CamelCase and snake_case word
 (add-hook 'prog-mode-hook 'subword-mode)
-
 
 ;;; automatically revert files
 (setq-default global-auto-revert-non-file-buffers t
 	      auto-revert-verbose nil)
 (global-auto-revert-mode)
-
 
 ;;; recent files
 (setq-default recentf-max-saved-items 500
@@ -92,7 +88,6 @@
         ;; Files is sorted by mtime
         (time-less-p y-mtime x-mtime)))))
 
-
 ;;; uniquify buffer names
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'reverse
@@ -100,13 +95,11 @@
       uniquify-after-kill-buffer-p t
       uniquify-ignore-buffers-re "^\\*")
 
-
 ;;; disable menu-bar, tool-bar, scroll-bar
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 (if window-system
     (scroll-bar-mode -1))
-
 
 ;;; copy current buffer filename to clipboard
 (defun copy-filename-to-clipboard ()
@@ -118,7 +111,6 @@
     (when filename
       (kill-new filename)
       (message "Copied buffer file name '%s' to the clipboard." filename))))
-
 
 ;;; kill current line when no region is active
 (defadvice kill-region (before slick-cut activate compile)
@@ -133,7 +125,7 @@
 (global-set-key (kbd "C-h") 'delete-backward-char)
 (global-set-key (kbd "C-x ?") 'help-command)
 (global-set-key (kbd "C-w") 'backward-kill-word)
-(global-set-key (kbd "C-x C-k") 'kill-region)
+(global-set-key (kbd "C-x C-w") 'kill-region)
 
 ;;; increase or decrease text scale conveniently
 (global-set-key (kbd "C-+") 'text-scale-increase)
@@ -163,15 +155,13 @@
     (add-to-list 'exec-path-from-shell-variables var))
   (exec-path-from-shell-initialize))
 
-
 ;;; Solarized dark color theme
 (use-package solarized-theme
   :when window-system
   :config
   (setq solarized-use-variable-pitch nil
 	solarized-scale-org-headlines nil)
-  (load-theme 'solarized-dark t))
-
+  (load-theme 'solarized-light t))
 
 ;; smart-mode-line: for more compact mode line
 (use-package smart-mode-line
@@ -179,17 +169,14 @@
   :config
   (sml/setup))
 
-
 ;;; auto-compile: Automatically compile Emacs Lisp libraries
 (use-package auto-compile
   :init (setq load-prefer-newer t)
   :config (auto-compile-on-load-mode))
 
-
 ;;; external linum mode, better performance than builtin linum mode
 (use-package nlinum
   :config (global-nlinum-mode))
-
 
 ;; guide-key: hint for shortcut keys
 (use-package guide-key
@@ -199,11 +186,9 @@
 	'("C-x r" "C-x 4" "C-c"))
   (guide-key-mode 1))
 
-
 ;;; rainbow-delimiters: colorful delimiters
 (use-package rainbow-delimiters
   :init (add-hook 'prog-mode-hook 'rainbow-delimiters-mode))
-
 
 ;;; dealing with trailing whitespace
 (defun trailing-whitespace-mode ()
@@ -214,12 +199,10 @@
 (add-hook 'prog-mode-hook 'trailing-whitespace-mode)
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
-
 ;;; Highlight-indent-guides: similar to sublime-text
 (use-package highlight-indent-guides
   :init (add-hook 'prog-mode-hook 'highlight-indent-guides-mode)
   :config (setq highlight-indent-guides-method 'character))
-
 
 ;;; Highlight symbol
 (use-package highlight-symbol
@@ -231,7 +214,6 @@
   (add-hook 'prog-mode-hook 'highlight-symbol-mode)
   (add-hook 'prog-mode-hook 'highlight-symbol-nav-mode))
 
-
 ;;; smartparens: strcutural parenthesis editing
 (use-package smartparens
   :init
@@ -239,7 +221,6 @@
   (add-hook 'emacs-lisp-mode-hook #'smartparens-strict-mode)
   :config
   (require 'smartparens-config))
-
 
 ;;; origami: code folding
 (use-package origami
@@ -249,7 +230,6 @@
 	      ("C-c F" . origami-toggle-all-nodes))
   :init (add-hook 'prog-mode-hook 'origami-mode))
 
-
 ;;; undo-tree: [C-x u] opens undo tree
 (use-package undo-tree
   :diminish undo-tree-mode
@@ -258,17 +238,14 @@
 	undo-tree-visualizer-diff t)
   (global-undo-tree-mode))
 
-
 ;;; switch-window: switch other window with a number
 (use-package switch-window
   :bind (("C-x o" . switch-window)))
-
 
 ;;; save cursor place when close file
 (if (version< emacs-version "25.0")
     (use-package saveplace :init (setq-default save-place t))
   (save-place-mode 1))
-
 
 ;;; Elscreen: tabbed window session manager modeled after GNU screen
 (use-package elscreen-persist
@@ -293,7 +270,6 @@
   :if window-system
   :config (elscreen-start))
 
-
 ;;; Projectile: Project navigation and management library for Emacs
 (use-package projectile
   :config
@@ -303,7 +279,6 @@
   			  (format " Proj[%s]" (projectile-project-name)))))
   (projectile-global-mode))
 
-
 ;;; yasnippet: A template system for Emacs
 (use-package yasnippet
   :init
@@ -311,7 +286,6 @@
   :config
   (setq yas-snippet-dirs '("~/.emacs.d/snippets"))
   (yas-reload-all))
-
 
 ;;; Company mode: modular in-buffer completion framework for Emacs
 (use-package company
@@ -321,14 +295,12 @@
   :config
   (setq company-tooltip-align-annotations t))
 
-
 ;;; smex used with counsel
 (use-package smex
   :defer t
   :config
   (setq smex-save-file (expand-file-name ".smex-items" user-emacs-directory))
   (smex-initialize))
-
 
 ;;; Ivy, swiper, counsel, avy
 (use-package ivy
@@ -361,7 +333,6 @@
 (use-package avy
   :bind (("C-c j" . avy-goto-word-or-subword-1)))
 
-
 ;;; Flycheck for syntax check
 (use-package flycheck
   :defer t
@@ -372,14 +343,12 @@
 	flycheck-idle-change-delay 0.8
 	flycheck-display-errors-function #'flycheck-display-error-messages-unless-error-list))
 
-
 ;;; builtin flyspell for spell checking
 (use-package flyspell
   :diminish (flyspell-mode "FlyS")
   :init
   (add-hook 'prog-mode-hook 'flyspell-prog-mode)
   (add-hook 'text-mode-hook 'flyspell-mode))
-
 
 ;;; Text search with grep, ag
 (use-package ag
@@ -404,7 +373,6 @@
 (use-package magit
   :bind (("C-x g" . magit-status)))
 
-
 ;;; org mode
 (use-package org-bullets :defer t)
 (use-package org
@@ -418,7 +386,6 @@
 				  (compose-region
 				   (match-beginning 1)
 				   (match-end 1) "•")))))))
-
 
 ;;; Syntax highlighting for common configuration file formats ;;;
 (use-package dockerfile-mode :defer t)
@@ -435,14 +402,12 @@
   :mode ("\\.\\(md\\|markdown\\)\\'" . markdown-mode))
 (use-package gh-md :defer t)
 
-
 ;;; irfc: Downloading and viewing RFC
 (use-package irfc
   :defer t
   :config
   (setq irfc-directory "~/rfcs"
 	irfc-assoc-mode t))
-
 
 ;;; Rust
 (use-package rust-mode
@@ -463,27 +428,24 @@
   :config
   (add-hook 'flycheck-mode-hook #'flycheck-rust-setup))
 
-
 ;;; Python
 ; (use-package elpy
 ;   :defer t
 ;   :init (add-hook 'python-mode-hook 'elpy))
 
-
-; ;;; Haskell
-; (use-package haskell-mode
-;   :bind (:map haskell-mode-map
-; 	      ("C-c C-l" . haskell-process-load-or-reload)
-; 	      ("C-c C-t" . haskell-process-do-type)
-; 	      ("C-c C-i" . haskell-process-do-info)
-; 	      ("C-c C-c" . haskell-process-cabal-build)
-; 	      ("C-c c" . haskell-process-cabal)
-; 	      ("M-." . haskell-mode-jump-to-def))
-;   :config
-;   (add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
-;   (add-hook 'haskell-mode-hook 'intero-mode))
-; (use-package intero :defer t)
-
+;;; Haskell
+(use-package haskell-mode
+  :bind (:map haskell-mode-map
+	      ("C-c C-l" . haskell-process-load-or-reload)
+	      ("C-c C-t" . haskell-process-do-type)
+	      ("C-c C-i" . haskell-process-do-info)
+	      ("C-c C-c" . haskell-process-cabal-build)
+	      ("C-c c" . haskell-process-cabal)
+	      ("M-." . haskell-mode-jump-to-def))
+  :config
+  (add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
+  (add-hook 'haskell-mode-hook 'intero-mode))
+(use-package intero :defer t)
 
 ;;; OCaml
 ; (use-package tuareg
@@ -504,11 +466,9 @@
 ; (use-package utop
 ;   :config (setq utop-command "opam config exec -- utop -emacs"))
 
-
 ;;; Scheme
 ; (use-package geiser :defer t)
 ; (use-package racket-mode :defer t)
-
 
 ;;; Lisp
 ; (use-package slime-company :defer t)
@@ -525,7 +485,6 @@
 ;   (when (executable-find "ccl")
 ;     (add-to-list 'slime-lisp-implementations
 ; 		 '(ccl ("ccl") :coding-system utf-8-unix))))
-
 
 ;;; Go
 (use-package go-eldoc :defer t)
@@ -547,7 +506,6 @@
 				 '(company-go))
 			    (go-eldoc-setup)))
   (add-hook 'before-save-hook 'gofmt-before-save))
-
 
 ;;; Web development
 (use-package restclient :defer t)
@@ -585,7 +543,6 @@
 ; (use-package coffee-mode
 ;   :defer t
 ;   :config (setq coffee-tab-width 2))
-
 
 ; (use-package erlang :defer t)
 ; (use-package elixir-mode :defer t)
