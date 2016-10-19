@@ -98,7 +98,7 @@
 ;;; disable menu-bar, tool-bar, scroll-bar
 (toggle-scroll-bar -1)
 (tool-bar-mode -1)
-(menu-bar-mode -1)
+; (menu-bar-mode -1)
 
 ;;; copy current buffer filename to clipboard
 (defun copy-filename-to-clipboard ()
@@ -140,29 +140,13 @@
 (require 'use-package)
 (setq use-package-always-ensure t)
 
-(require 'powerline)
+(elscreen-start)
+
+;; Powerline
 (use-package powerline
-  :ensure t
-  :init
-  (use-package diminish
-    :ensure t
-    :config
-    (progn
-      (eval-after-load "undo-tree" '(diminish 'undo-tree-mode))
-      (eval-after-load "simple" '(diminish 'auto-fill-function))
-      (eval-after-load "eldoc" '(diminish 'eldoc-mode))
-      (eval-after-load "guide-key" '(diminish 'guide-key-mode))
-      (eval-after-load "highlight-parentheses" '(diminish 'highlight-parentheses-mode))
-      (eval-after-load "elisp-slime-nav" '(diminish 'elisp-slime-nav-mode " sln"))
-      (eval-after-load "projectile" '(diminish 'projectile-mode " prj"))
-      (eval-after-load "paredit" '(diminish 'paredit-mode " par"))
-      (eval-after-load "company" '(diminish 'company-mode " cmp"))
-      (eval-after-load "cider" '(diminish 'cider-mode " cid"))
-      (eval-after-load "typed-clojure-mode" '(diminish 'typed-clojure-mode " typ"))
-      (eval-after-load "org-indent" '(diminish 'org-indent-mode))
-      (eval-after-load "evil-org" '(diminish 'evil-org-mode))
-      (eval-after-load "evil-cleverparens" '(diminish 'evil-cleverparens-mode))
-      (eval-after-load "autorevert" '(diminish 'auto-revert-mode)))))
+  :config 
+  (powerline-vim-theme))
+
 
 ;;; Read environment variable from shell config
 (use-package exec-path-from-shell
@@ -177,12 +161,12 @@
   (exec-path-from-shell-initialize))
 
 ;;; Solarized dark color theme
-(use-package solarized-theme
-  :when window-system
-  :config
-  (setq solarized-use-variable-pitch nil
-	solarized-scale-org-headlines nil)
-  (load-theme 'solarized-light t))
+; (use-package solarized-theme
+;   :when window-system
+;   :config
+;   (setq solarized-use-variable-pitch nil
+; 	solarized-scale-org-headlines nil)
+;   (load-theme 'solarized-light t))
 
 ;; smart-mode-line: for more compact mode line
 (use-package smart-mode-line
