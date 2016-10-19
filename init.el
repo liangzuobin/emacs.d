@@ -7,17 +7,17 @@
 
 ;;; Code:
 (setq package-archives
-      '(;; ("gnu" . "http://elpa.gnu.org/packages/")
-	("gnu" . "http://elpa.zilongshanren.com/gnu/")
-	;; ("marmalade" . "http://marmalade-repo.org/packages/")
-	("marmalade" . "http://elpa.zilongshanren.com/marmalade/")
-	;; ("melpa" . "http://melpa.milkbox.net/packages/")
-	("melpa" . "http://elpa.zilongshanren.com/melpa/")))
+    '(;; ("gnu" . "http://elpa.gnu.org/packages/")
+    ("gnu" . "http://elpa.zilongshanren.com/gnu/")
+    ;; ("marmalade" . "http://marmalade-repo.org/packages/")
+    ("marmalade" . "http://elpa.zilongshanren.com/marmalade/")
+    ;; ("melpa" . "http://melpa.milkbox.net/packages/")
+    ("melpa" . "http://elpa.zilongshanren.com/melpa/")))
 (package-initialize)
 
 ;;; Emacs auto generated customization file
-; (setq custom-file "~/.emacs.d/custom.el")
-; (load custom-file)
+(setq custom-file "~/.emacs.d/custom.el")
+(load custom-file)
 
 ;;; some good default settings
 (fset 'yes-or-no-p 'y-or-n-p)
@@ -96,10 +96,9 @@
       uniquify-ignore-buffers-re "^\\*")
 
 ;;; disable menu-bar, tool-bar, scroll-bar
-(menu-bar-mode -1)
+(toggle-scroll-bar -1)
 (tool-bar-mode -1)
-(if window-system
-    (scroll-bar-mode -1))
+(menu-bar-mode -1)
 
 ;;; copy current buffer filename to clipboard
 (defun copy-filename-to-clipboard ()
@@ -126,8 +125,6 @@
 (global-set-key (kbd "C-x ?") 'help-command)
 (global-set-key (kbd "C-w") 'backward-kill-word)
 (global-set-key (kbd "C-x C-w") 'kill-region)
-
-;;; increase or decrease text scale conveniently
 (global-set-key (kbd "C-+") 'text-scale-increase)
 (global-set-key (kbd "C--") 'text-scale-decrease)
 
@@ -142,6 +139,30 @@
   (package-install 'diminish))
 (require 'use-package)
 (setq use-package-always-ensure t)
+
+(require 'powerline)
+(use-package powerline
+  :ensure t
+  :init
+  (use-package diminish
+    :ensure t
+    :config
+    (progn
+      (eval-after-load "undo-tree" '(diminish 'undo-tree-mode))
+      (eval-after-load "simple" '(diminish 'auto-fill-function))
+      (eval-after-load "eldoc" '(diminish 'eldoc-mode))
+      (eval-after-load "guide-key" '(diminish 'guide-key-mode))
+      (eval-after-load "highlight-parentheses" '(diminish 'highlight-parentheses-mode))
+      (eval-after-load "elisp-slime-nav" '(diminish 'elisp-slime-nav-mode " sln"))
+      (eval-after-load "projectile" '(diminish 'projectile-mode " prj"))
+      (eval-after-load "paredit" '(diminish 'paredit-mode " par"))
+      (eval-after-load "company" '(diminish 'company-mode " cmp"))
+      (eval-after-load "cider" '(diminish 'cider-mode " cid"))
+      (eval-after-load "typed-clojure-mode" '(diminish 'typed-clojure-mode " typ"))
+      (eval-after-load "org-indent" '(diminish 'org-indent-mode))
+      (eval-after-load "evil-org" '(diminish 'evil-org-mode))
+      (eval-after-load "evil-cleverparens" '(diminish 'evil-cleverparens-mode))
+      (eval-after-load "autorevert" '(diminish 'auto-revert-mode)))))
 
 ;;; Read environment variable from shell config
 (use-package exec-path-from-shell
@@ -345,6 +366,7 @@
 
 ;;; builtin flyspell for spell checking
 (use-package flyspell
+  :ensure t
   :diminish (flyspell-mode "FlyS")
   :init
   (add-hook 'prog-mode-hook 'flyspell-prog-mode)
@@ -416,9 +438,9 @@
 (use-package racer
   :diminish racer-mode
   :bind (:map rust-mode-map
-	      ("M-." . racer-find-definition)
-	      ("M-," . pop-tag-mark)
-	      ("TAB" . company-indent-or-complete-common))
+      ("M-." . racer-find-definition)
+      ("M-," . pop-tag-mark)
+      ("TAB" . company-indent-or-complete-common))
   :init
   (if (eq system-type 'darwin)
       (exec-path-from-shell-copy-env "RUST_SRC_PATH"))
@@ -436,39 +458,16 @@
 ;;; Haskell
 (use-package haskell-mode
   :bind (:map haskell-mode-map
-	      ("C-c C-l" . haskell-process-load-or-reload)
-	      ("C-c C-t" . haskell-process-do-type)
-	      ("C-c C-i" . haskell-process-do-info)
-	      ("C-c C-c" . haskell-process-cabal-build)
-	      ("C-c c" . haskell-process-cabal)
-	      ("M-." . haskell-mode-jump-to-def))
+      ("C-c C-l" . haskell-process-load-or-reload)
+      ("C-c C-t" . haskell-process-do-type)
+      ("C-c C-i" . haskell-process-do-info)
+      ("C-c C-c" . haskell-process-cabal-build)
+      ("C-c c" . haskell-process-cabal)
+      ("M-." . haskell-mode-jump-to-def))
   :config
   (add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
   (add-hook 'haskell-mode-hook 'intero-mode))
 (use-package intero :defer t)
-
-;;; OCaml
-; (use-package tuareg
-;   :defer t
-;   :config
-;   (add-hook 'tuareg-mode-hook 'merlin-mode)
-;   (add-hook 'tuareg-mode-hook 'utop-minor-mode)
-;   (add-hook 'tuareg-mode-hook 'ocp-indent-caml-mode-setup))
-; (use-package ocp-indent :defer t
-;   :config (setq ocp-indent-path "~/.opam/system/bin/ocp-indent"))
-; (use-package merlin
-;   :defer t
-;   :config
-;   (setq merlin-command "~/.opam/system/bin/ocamlmerlin")
-;   (with-eval-after-load 'company
-;     (add-to-list 'company-backends 'merlin-company-backend))
-;   (add-hook 'merlin-mode-hook 'company-mode))
-; (use-package utop
-;   :config (setq utop-command "opam config exec -- utop -emacs"))
-
-;;; Scheme
-; (use-package geiser :defer t)
-; (use-package racket-mode :defer t)
 
 ;;; Lisp
 ; (use-package slime-company :defer t)
@@ -540,23 +539,5 @@
 (use-package typescript-mode
   :defer t
   :config (add-hook 'typescript-mode-hook #'tide-mode))
-; (use-package coffee-mode
-;   :defer t
-;   :config (setq coffee-tab-width 2))
-
-; (use-package erlang :defer t)
-; (use-package elixir-mode :defer t)
-; (use-package nim-mode :defer t)
-; (use-package julia-mode :defer t)
-; (use-package sml-mode :defer t)
-; (use-package idris-mode :defer t)
-; (use-package scala-mode :defer t)
-; (use-package kotlin-mode :defer t)
-; (use-package d-mode :defer t
-; :mode (("\\.d[i]?\\'" . d-mode)))
-; (use-package fstar-mode :defer t
-;   :mode (("\\.fst\\'" . fstar-mode)
-; 	 ("\\.fsi\\'" . fstar-mode))
-;   :config (setq fstar-executable "~/bin/fstar.exe"))
 
 ;;; init.el ends here

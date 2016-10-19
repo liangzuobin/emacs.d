@@ -1,2 +1,2 @@
 # emacs.d
-emacs config
+An emacs config copy from Tennix.
