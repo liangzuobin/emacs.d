@@ -152,7 +152,7 @@
 ;; Powerline
 (use-package powerline
   :config 
-  (powerline-vim-theme))
+  (powerline-nano-theme))
 
 
 ;;; Read environment variable from shell config
@@ -168,12 +168,12 @@
   (exec-path-from-shell-initialize))
 
 ;;; Solarized dark color theme
-; (use-package solarized-theme
-;   :when window-system
-;   :config
-;   (setq solarized-use-variable-pitch nil
-; 	solarized-scale-org-headlines nil)
-;   (load-theme 'solarized-light t))
+(use-package solarized-theme
+  :when window-system
+  :config
+  (setq solarized-use-variable-pitch nil
+	solarized-scale-org-headlines nil)
+  (load-theme 'solarized-light t))
 
 ;; smart-mode-line: for more compact mode line
 (use-package smart-mode-line
@@ -305,6 +305,7 @@
   :init
   (add-hook 'prog-mode-hook 'company-mode)
   :config
+  (setq company-idle-delay 0)
   (setq company-tooltip-align-annotations t))
 
 ;;; smex used with counsel
