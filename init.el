@@ -131,6 +131,13 @@
 ;;; replace buffer-menu with ibuffer
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 
+;;; I prefer cmd key for meta
+(setq mac-option-key-is-meta nil
+      mac-command-key-is-meta t
+      mac-command-modifier 'meta
+      mac-option-modifier 'none)
+
+
 ;;; use-package and diminish
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
