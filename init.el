@@ -21,8 +21,7 @@
 
 ;;; some good default settings
 (fset 'yes-or-no-p 'y-or-n-p)
-(setq-default blink-cursor-interval 0.4
-	      bookmark-default-file (expand-file-name ".bookmarks.el" user-emacs-directory)
+(setq-default ookmark-default-file (expand-file-name ".bookmarks.el" user-emacs-directory)
 	      case-fold-search t
 	      column-number-mode t
 	      make-backup-files nil
@@ -31,6 +30,8 @@
 	      initial-scratch-message ""
 	      ediff-split-window-function 'split-window-horizontally
 	      ediff-window-setup-function 'ediff-setup-windows-plain)
+
+(blink-cursor-mode 0)
 
 ;;; prettify symbol mode,
 ;;; Eg: lambda will be replaced by Greek letter lambda
@@ -426,12 +427,24 @@
 ;;; Rust
 (use-package rust-mode
   :mode ("\\.rs\\'" . rust-mode)
-  :config (add-hook 'rust-mode-hook #'racer-mode))
+  :config 
+  (add-hook 'rust-mode-hook #'racer-mode)
+  (defun rust-save-compile-and-run ()
+    (interactive)
+    (save-buffer)
+    (if (locate-dominating-file (buffer-file-name) "Cargo.toml")
+        (compile "cargo run")
+      (compile
+        (format "rustc %s && %s"
+          (buffer-file-name)
+          (file-name-sans-extension (buffer-file-name))))))
+  (add-hook 'rust-mode-hook 
+	    (lambda () (define-key rust-mode-map (kbd "M-g M-r") 'rust-save-compile-and-run))))
 (use-package racer
   :diminish racer-mode
   :bind (:map rust-mode-map
-      ("M-." . racer-find-definition)
-      ("M-," . pop-tag-mark)
+      ("M-g M-d" . racer-find-definition)
+      ("M-g M-t" . pop-tag-mark)
       ("TAB" . company-indent-or-complete-common))
   :init
   (if (eq system-type 'darwin)
@@ -531,5 +544,35 @@
 (use-package typescript-mode
   :defer t
   :config (add-hook 'typescript-mode-hook #'tide-mode))
+
+;;; vim like actions
+(defun vi-open-line-above ()
+  "Insert a newline above the current line and put point at beginning."
+  (interactive)
+  (unless (bolp)
+    (beginning-of-line))
+  (newline)
+  (forward-line -1)
+  (indent-according-to-mode))
+
+(defun vi-open-line-below ()
+  "Insert a newline below the current line and put point at beginning."
+  (interactive)
+  (unless (eolp)
+    (end-of-line))
+  (newline-and-indent))
+
+(defun vi-kill-current-line (&optional n)
+  (interactive "p")
+  (save-excursion
+    (beginning-of-line)
+    (let ((kill-whole-line t))
+      (kill-line n))))
+
+(global-set-key (kbd "C-S-o") 'vi-open-line-above)
+(global-set-key (kbd "C-o") 'vi-open-line-below)
+(global-set-key (kbd "M-DEL") 'vi-kill-current-line)
+
+
 
 ;;; init.el ends here
