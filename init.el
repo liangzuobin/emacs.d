@@ -7,12 +7,12 @@
 
 ;;; Code:
 (setq package-archives
-    '(;; ("gnu" . "http://elpa.gnu.org/packages/")
-    ("gnu" . "http://elpa.zilongshanren.com/gnu/")
-    ;; ("marmalade" . "http://marmalade-repo.org/packages/")
-    ("marmalade" . "http://elpa.zilongshanren.com/marmalade/")
-    ;; ("melpa" . "http://melpa.milkbox.net/packages/")
-    ("melpa" . "http://elpa.zilongshanren.com/melpa/")))
+      '(;; ("gnu" . "http://elpa.gnu.org/packages/")
+	("gnu" . "http://elpa.zilongshanren.com/gnu/")
+	;; ("marmalade" . "http://marmalade-repo.org/packages/")
+	("marmalade" . "http://elpa.zilongshanren.com/marmalade/")
+	;; ("melpa" . "http://melpa.milkbox.net/packages/")
+	("melpa" . "http://elpa.zilongshanren.com/melpa/")))
 (package-initialize)
 
 ;;; Emacs auto generated customization file
@@ -99,7 +99,7 @@
 ;;; disable menu-bar, tool-bar, scroll-bar
 (toggle-scroll-bar -1)
 (tool-bar-mode -1)
-; (menu-bar-mode -1)
+					; (menu-bar-mode -1)
 
 ;;; copy current buffer filename to clipboard
 (defun copy-filename-to-clipboard ()
@@ -154,7 +154,7 @@
 
 ;; Powerline
 (use-package powerline
-  :config 
+  :config
   (powerline-nano-theme))
 
 
@@ -429,7 +429,7 @@
 ;;; Rust
 (use-package rust-mode
   :mode ("\\.rs\\'" . rust-mode)
-  :config 
+  :config
   (add-hook 'rust-mode-hook #'racer-mode)
   (defun rust-save-compile-and-run ()
     (interactive)
@@ -437,17 +437,17 @@
     (if (locate-dominating-file (buffer-file-name) "Cargo.toml")
         (compile "cargo run")
       (compile
-        (format "rustc %s && %s"
-          (buffer-file-name)
-          (file-name-sans-extension (buffer-file-name))))))
-  (add-hook 'rust-mode-hook 
+       (format "rustc %s && %s"
+	       (buffer-file-name)
+	       (file-name-sans-extension (buffer-file-name))))))
+  (add-hook 'rust-mode-hook
 	    (lambda () (define-key rust-mode-map (kbd "M-g M-r") 'rust-save-compile-and-run))))
 (use-package racer
   :diminish racer-mode
   :bind (:map rust-mode-map
-      ("M-g M-d" . racer-find-definition)
-      ("M-g M-t" . pop-tag-mark)
-      ("TAB" . company-indent-or-complete-common))
+	      ("M-g M-d" . racer-find-definition)
+	      ("M-g M-t" . pop-tag-mark)
+	      ("TAB" . company-indent-or-complete-common))
   :init
   (if (eq system-type 'darwin)
       (exec-path-from-shell-copy-env "RUST_SRC_PATH"))
@@ -458,39 +458,39 @@
   (add-hook 'flycheck-mode-hook #'flycheck-rust-setup))
 
 ;;; Python
-; (use-package elpy
-;   :defer t
-;   :init (add-hook 'python-mode-hook 'elpy))
+					; (use-package elpy
+					;   :defer t
+					;   :init (add-hook 'python-mode-hook 'elpy))
 
 ;;; Haskell
 (use-package haskell-mode
   :bind (:map haskell-mode-map
-      ("C-c C-l" . haskell-process-load-or-reload)
-      ("C-c C-t" . haskell-process-do-type)
-      ("C-c C-i" . haskell-process-do-info)
-      ("C-c C-c" . haskell-process-cabal-build)
-      ("C-c c" . haskell-process-cabal)
-      ("M-." . haskell-mode-jump-to-def))
+	      ("C-c C-l" . haskell-process-load-or-reload)
+	      ("C-c C-t" . haskell-process-do-type)
+	      ("C-c C-i" . haskell-process-do-info)
+	      ("C-c C-c" . haskell-process-cabal-build)
+	      ("C-c c" . haskell-process-cabal)
+	      ("M-." . haskell-mode-jump-to-def))
   :config
   (add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
   (add-hook 'haskell-mode-hook 'intero-mode))
 (use-package intero :defer t)
 
 ;;; Lisp
-; (use-package slime-company :defer t)
-; (use-package slime
-;   :defer t
-;   :config
-;   (setq slime-contribs '(slime-fancy slime-company))
-;   (when (executable-find "sbcl")
-;     (add-to-list 'slime-lisp-implementations
-; 		 '(sbcl ("sbcl") :coding-system utf-8-unix)))
-;   (when (executable-find "lisp")
-;     (add-to-list 'slime-lisp-implementations
-; 		 '(cmucl ("lisp") :coding-system iso-latin-1-unix)))
-;   (when (executable-find "ccl")
-;     (add-to-list 'slime-lisp-implementations
-; 		 '(ccl ("ccl") :coding-system utf-8-unix))))
+					; (use-package slime-company :defer t)
+					; (use-package slime
+					;   :defer t
+					;   :config
+					;   (setq slime-contribs '(slime-fancy slime-company))
+					;   (when (executable-find "sbcl")
+					;     (add-to-list 'slime-lisp-implementations
+					; 		 '(sbcl ("sbcl") :coding-system utf-8-unix)))
+					;   (when (executable-find "lisp")
+					;     (add-to-list 'slime-lisp-implementations
+					; 		 '(cmucl ("lisp") :coding-system iso-latin-1-unix)))
+					;   (when (executable-find "ccl")
+					;     (add-to-list 'slime-lisp-implementations
+					; 		 '(ccl ("ccl") :coding-system utf-8-unix))))
 
 ;;; Go
 (use-package go-eldoc :defer t)
