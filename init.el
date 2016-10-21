@@ -38,8 +38,8 @@
 (global-prettify-symbols-mode)
 
 ;;; builtin parenthesis editing
-;; (electric-pair-mode) ;; replaced with smartparens-mode
-(show-paren-mode t)	;; faster than show-smartparens-mode
+(electric-pair-mode) ;; replaced with smartparens-mode
+(show-paren-mode t)  ;; faster than show-smartparens-mode
 
 ;;; subword mode for prog-mode CamelCase and snake_case word
 (add-hook 'prog-mode-hook 'subword-mode)
@@ -120,6 +120,14 @@
      (list (line-beginning-position)
 	   (line-beginning-position 2)))))
 
+;;; I prefer cmd key for meta
+(setq mac-option-key-is-meta nil)
+(setq mac-command-key-is-meta t)
+(setq mac-command-modifier 'meta)
+(setq mac-option-modifier 'alt)
+
+(global-set-key (kbd "A-a") 'beginning-of-buffer)
+(global-set-key (kbd "A-e") 'end-of-buffer)
 
 ;;; make C-h and C-w same as in shell
 (global-set-key (kbd "C-h") 'delete-backward-char)
@@ -131,12 +139,6 @@
 
 ;;; replace buffer-menu with ibuffer
 (global-set-key (kbd "C-x C-b") 'ibuffer)
-
-;;; I prefer cmd key for meta
-(setq mac-option-key-is-meta nil
-      mac-command-key-is-meta t
-      mac-command-modifier 'meta
-      mac-option-modifier 'none)
 
 
 ;;; use-package and diminish
