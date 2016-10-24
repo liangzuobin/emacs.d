@@ -575,6 +575,4 @@
 (global-set-key (kbd "C-o") 'vi-open-line-below)
 (global-set-key (kbd "M-DEL") 'vi-kill-current-line)
 
-
-
 ;;; init.el ends here
