@@ -133,13 +133,12 @@
 (global-set-key (kbd "C-h") 'delete-backward-char)
 (global-set-key (kbd "C-x ?") 'help-command)
 (global-set-key (kbd "C-w") 'backward-kill-word)
-(global-set-key (kbd "C-x C-w") 'kill-region)
+(global-set-key (kbd "C-x C-k") 'kill-region)
 (global-set-key (kbd "C-+") 'text-scale-increase)
 (global-set-key (kbd "C--") 'text-scale-decrease)
 
 ;;; replace buffer-menu with ibuffer
 (global-set-key (kbd "C-x C-b") 'ibuffer)
-
 
 ;;; use-package and diminish
 (unless (package-installed-p 'use-package)
@@ -155,8 +154,7 @@
 ;; Powerline
 (use-package powerline
   :config
-  (powerline-nano-theme))
-
+  (powerline-vim-theme))
 
 ;;; Read environment variable from shell config
 (use-package exec-path-from-shell
@@ -170,7 +168,7 @@
     (add-to-list 'exec-path-from-shell-variables var))
   (exec-path-from-shell-initialize))
 
-;;; Solarized dark color theme
+;;; Solarized color theme
 (use-package solarized-theme
   :when window-system
   :config
@@ -338,34 +336,37 @@
   (add-to-list 'ivy-sort-functions-alist
 	       '(read-file-name-internal . eh-ivy-sort-file-function))
   (ivy-mode 1))
+
 (use-package counsel
   :diminish counsel-mode
   :config
   (setq counsel-mode-override-describe-bindings t)
   (counsel-mode))
+
 (use-package swiper
   :bind (:map ivy-mode-map
 	      ("C-s" . swiper)))
+
 (use-package avy
   :bind (("C-c j" . avy-goto-word-or-subword-1)))
 
 ;;; Flycheck for syntax check
-(use-package flycheck
-  :defer t
-  :init
-  (add-hook 'prog-mode-hook 'flycheck-mode)
-  :config
-  (setq flycheck-check-syntax-automatically '(save idle-change mode-enabled)
-	flycheck-idle-change-delay 0.8
-	flycheck-display-errors-function #'flycheck-display-error-messages-unless-error-list))
+; (use-package flycheck
+;   :defer t
+;   :init
+;   (add-hook 'prog-mode-hook 'flycheck-mode)
+;   :config
+;   (setq flycheck-check-syntax-automatically '(save idle-change mode-enabled)
+; 	flycheck-idle-change-delay 0.8
+; 	flycheck-display-errors-function #'flycheck-display-error-messages-unless-error-list))
 
 ;;; builtin flyspell for spell checking
-(use-package flyspell
-  :ensure t
-  :diminish (flyspell-mode "FlyS")
-  :init
-  (add-hook 'prog-mode-hook 'flyspell-prog-mode)
-  (add-hook 'text-mode-hook 'flyspell-mode))
+; (use-package flyspell
+;   :ensure t
+;   :diminish (flyspell-mode "FlyS")
+;   :init
+;   (add-hook 'prog-mode-hook 'flyspell-prog-mode)
+;   (add-hook 'text-mode-hook 'flyspell-mode))
 
 ;;; Text search with grep, ag
 (use-package ag
@@ -458,9 +459,9 @@
   (add-hook 'flycheck-mode-hook #'flycheck-rust-setup))
 
 ;;; Python
-					; (use-package elpy
-					;   :defer t
-					;   :init (add-hook 'python-mode-hook 'elpy))
+; (use-package elpy
+;   :defer t
+;   :init (add-hook 'python-mode-hook 'elpy))
 
 ;;; Haskell
 (use-package haskell-mode
@@ -477,20 +478,20 @@
 (use-package intero :defer t)
 
 ;;; Lisp
-					; (use-package slime-company :defer t)
-					; (use-package slime
-					;   :defer t
-					;   :config
-					;   (setq slime-contribs '(slime-fancy slime-company))
-					;   (when (executable-find "sbcl")
-					;     (add-to-list 'slime-lisp-implementations
-					; 		 '(sbcl ("sbcl") :coding-system utf-8-unix)))
-					;   (when (executable-find "lisp")
-					;     (add-to-list 'slime-lisp-implementations
-					; 		 '(cmucl ("lisp") :coding-system iso-latin-1-unix)))
-					;   (when (executable-find "ccl")
-					;     (add-to-list 'slime-lisp-implementations
-					; 		 '(ccl ("ccl") :coding-system utf-8-unix))))
+; (use-package slime-company :defer t)
+; (use-package slime
+;   :defer t
+;   :config
+;   (setq slime-contribs '(slime-fancy slime-company))
+;   (when (executable-find "sbcl")
+;     (add-to-list 'slime-lisp-implementations
+; 		 '(sbcl ("sbcl") :coding-system utf-8-unix)))
+;   (when (executable-find "lisp")
+;     (add-to-list 'slime-lisp-implementations
+; 		 '(cmucl ("lisp") :coding-system iso-latin-1-unix)))
+;   (when (executable-find "ccl")
+;     (add-to-list 'slime-lisp-implementations
+; 		 '(ccl ("ccl") :coding-system utf-8-unix))))
 
 ;;; Go
 (use-package go-eldoc :defer t)
@@ -574,5 +575,15 @@
 (global-set-key (kbd "C-S-o") 'vi-open-line-above)
 (global-set-key (kbd "C-o") 'vi-open-line-below)
 (global-set-key (kbd "M-DEL") 'vi-kill-current-line)
+
+(use-package spaceline-config
+  :ensure spaceline
+  :config
+  (spaceline-spacemacs-theme)
+  (setq powerline-height 20)
+  (setq powerline-raw " ")
+  (setq ns-use-srgb-colorspace nil))
+
+(setq x-underline-at-descent-line t)
 
 ;;; init.el ends here
