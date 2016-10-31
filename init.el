@@ -136,6 +136,7 @@
 (global-set-key (kbd "C-x C-k") 'kill-region)
 (global-set-key (kbd "C-+") 'text-scale-increase)
 (global-set-key (kbd "C--") 'text-scale-decrease)
+(global-set-key (kbd "C-x C-o") 'find-file)
 
 ;;; replace buffer-menu with ibuffer
 (global-set-key (kbd "C-x C-b") 'ibuffer)
@@ -154,7 +155,12 @@
 ;; Powerline
 (use-package powerline
   :config
-  (powerline-vim-theme))
+  ; (setq powerline-height 20)
+  ; (setq powerline-raw " ")
+  (setq ns-use-srgb-colorspace t)
+  (powerline-raw mode-line-mule-info nil 'l)
+  (setq powerline-default-separator nil)
+  (powerline-default-theme))
 
 ;;; Read environment variable from shell config
 (use-package exec-path-from-shell
@@ -173,8 +179,26 @@
   :when window-system
   :config
   (setq solarized-use-variable-pitch nil
-	solarized-scale-org-headlines nil)
+	solarized-scale-org-headlines nil
+	solarized-high-contrast-mode-line t)
+  (setq solarized-distinct-fringe-background t)
+  (setq solarized-use-variable-pitch nil)
+  (setq solarized-high-contrast-mode-line t)
+  (setq solarized-use-less-bold t)
+  (setq solarized-emphasize-indicators nil)
+  (setq solarized-scale-org-headlines nil)
+  (setq solarized-height-minus-1 1)
+  (setq solarized-height-plus-1 1)
+  (setq solarized-height-plus-2 1)
+  (setq solarized-height-plus-3 1)
+  (setq solarized-height-plus-4 1)
   (load-theme 'solarized-light t))
+(add-hook 'after-make-frame-functions
+          (lambda (frame)
+            (let ((mode (if (display-graphic-p frame) 'light 'dark)))
+              (set-frame-parameter frame 'background-mode mode)
+              (set-terminal-parameter frame 'background-mode mode))
+            (enable-theme 'solarized)))
 
 ;; smart-mode-line: for more compact mode line
 (use-package smart-mode-line
@@ -215,7 +239,10 @@
 ;;; Highlight-indent-guides: similar to sublime-text
 (use-package highlight-indent-guides
   :init (add-hook 'prog-mode-hook 'highlight-indent-guides-mode)
-  :config (setq highlight-indent-guides-method 'character))
+  :config 
+    (setq highlight-indent-guides-method 'character)
+    (setq highlight-indent-guides-character ?\|)
+    (set-face-foreground 'highlight-indent-guides-character-face "darkgray"))
 
 ;;; Highlight symbol
 (use-package highlight-symbol
@@ -549,41 +576,42 @@
   :config (add-hook 'typescript-mode-hook #'tide-mode))
 
 ;;; vim like actions
-(defun vi-open-line-above ()
-  "Insert a newline above the current line and put point at beginning."
-  (interactive)
-  (unless (bolp)
-    (beginning-of-line))
-  (newline)
-  (forward-line -1)
-  (indent-according-to-mode))
+; (defun vi-open-line-above ()
+;   "Insert a newline above the current line and put point at beginning."
+;   (interactive)
+;   (unless (bolp)
+;     (beginning-of-line))
+;   (newline)
+;   (forward-line -1)
+;   (indent-according-to-mode))
 
-(defun vi-open-line-below ()
-  "Insert a newline below the current line and put point at beginning."
-  (interactive)
-  (unless (eolp)
-    (end-of-line))
-  (newline-and-indent))
+; (defun vi-open-line-below ()
+;   "Insert a newline below the current line and put point at beginning."
+;   (interactive)
+;   (unless (eolp)
+;     (end-of-line))
+;   (newline-and-indent))
 
-(defun vi-kill-current-line (&optional n)
-  (interactive "p")
-  (save-excursion
-    (beginning-of-line)
-    (let ((kill-whole-line t))
-      (kill-line n))))
+; (defun vi-kill-current-line (&optional n)
+;   (interactive "p")
+;   (save-excursion
+;     (beginning-of-line)
+;     (let ((kill-whole-line t))
+;       (kill-line n))))
 
-(global-set-key (kbd "C-S-o") 'vi-open-line-above)
-(global-set-key (kbd "C-o") 'vi-open-line-below)
-(global-set-key (kbd "M-DEL") 'vi-kill-current-line)
-
-(use-package spaceline-config
-  :ensure spaceline
-  :config
-  (spaceline-spacemacs-theme)
-  (setq powerline-height 20)
-  (setq powerline-raw " ")
-  (setq ns-use-srgb-colorspace nil))
+; (global-set-key (kbd "C-S-o") 'vi-open-line-above)
+; (global-set-key (kbd "C-o") 'vi-open-line-below)
+; (global-set-key (kbd "M-DEL") 'vi-kill-current-line)
 
 (setq x-underline-at-descent-line t)
 
-;;; init.el ends here
+;;; mouse scroll
+(setq scroll-conservatively 101)
+(setq mouse-wheel-scroll-amount '(1))
+(setq mouse-wheel-progressive-speed nil)
+
+;;; finally, evilized
+(use-package evil)
+(evil-mode 1)
+(provide 'init-evil)
+
