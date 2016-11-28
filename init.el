@@ -42,7 +42,7 @@
 (show-paren-mode t)  ;; faster than show-smartparens-mode
 
 ;;; subword mode for prog-mode CamelCase and snake_case word
-(add-hook 'prog-mode-hook 'subword-mode)
+;(add-to-list-hook 'prog-mode-hook 'subword-mode)
 
 ;;; automatically revert files
 (setq-default global-auto-revert-non-file-buffers t
@@ -99,7 +99,7 @@
 ;;; disable menu-bar, tool-bar, scroll-bar
 (toggle-scroll-bar -1)
 (tool-bar-mode -1)
-					; (menu-bar-mode -1)
+(fringe-mode -1)
 
 ;;; copy current buffer filename to clipboard
 (defun copy-filename-to-clipboard ()
@@ -237,12 +237,12 @@
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
 ;;; Highlight-indent-guides: similar to sublime-text
-(use-package highlight-indent-guides
-  :init (add-hook 'prog-mode-hook 'highlight-indent-guides-mode)
-  :config 
-    (setq highlight-indent-guides-method 'character)
-    (setq highlight-indent-guides-character ?\|)
-    (set-face-foreground 'highlight-indent-guides-character-face "darkgray"))
+; (use-package highlight-indent-guides
+;   :init (add-hook 'prog-mode-hook 'highlight-indent-guides-mode)
+;   :config
+;     (setq highlight-indent-guides-method 'character)
+;     (setq highlight-indent-guides-character ?\|)
+;     (set-face-foreground 'highlight-indent-guides-character-face "darkgray"))
 
 ;;; Highlight symbol
 (use-package highlight-symbol
@@ -287,6 +287,16 @@
     (use-package saveplace :init (setq-default save-place t))
   (save-place-mode 1))
 
+(use-package elscreen
+  :if window-system
+  :init
+  (progn
+    (set-face-attribute 'elscreen-tab-background-face nil :inherit 'default :background nil)
+    (setq-default elscreen-tab-display-control nil)
+    (setq-default elscreen-tab-display-kill-screen nil)
+    (elscreen-set-prefix-key "\C-q")
+    (elscreen-start)))
+
 ;;; Elscreen: tabbed window session manager modeled after GNU screen
 (use-package elscreen-persist
   :init
@@ -306,9 +316,6 @@
   (add-hook 'desktop-save-hook 'desktop-prepare-data-elscreen!)
   (add-hook 'desktop-globals-to-save 'desktop-data-elscreen)
   (desktop-save-mode 1))
-(use-package elscreen
-  :if window-system
-  :config (elscreen-start))
 
 ;;; Projectile: Project navigation and management library for Emacs
 (use-package projectile
@@ -333,7 +340,7 @@
   :init
   (add-hook 'prog-mode-hook 'company-mode)
   :config
-  (setq company-idle-delay 0)
+  (setq company-idle-delay 0.3)
   (setq company-tooltip-align-annotations t))
 
 ;;; smex used with counsel
@@ -375,7 +382,7 @@
 	      ("C-s" . swiper)))
 
 (use-package avy
-  :bind (("C-c j" . avy-goto-word-or-subword-1)))
+  :bind (("C-;" . avy-goto-char-2)))
 
 ;;; Flycheck for syntax check
 ; (use-package flycheck
@@ -614,4 +621,3 @@
 (use-package evil)
 (evil-mode 1)
 (provide 'init-evil)
-
