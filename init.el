@@ -532,10 +532,6 @@
 (use-package company-go :defer t)
 (use-package go-mode
   :defer t
-  :bind (("C-c C-r" . go-remove-unused-imports)
-	 ("C-c C-g" . go-goto-imports)
-	 ("C-c C-f" . gofmt)
-	 ("C-c C-k" . godoc))
   :init
   (if (eq system-type 'darwin)
       (exec-path-from-shell-copy-env "GOPATH"))
@@ -546,7 +542,9 @@
 			    (set (make-local-variable 'company-backends)
 				 '(company-go))
 			    (go-eldoc-setup)))
-  (add-hook 'before-save-hook 'gofmt-before-save))
+  (add-hook 'before-save-hook 'gofmt-before-save)
+  (evil-define-key 'normal go-mode-map
+    "gd" 'godef-jump))
 
 ;;; Web development
 (use-package restclient :defer t)
