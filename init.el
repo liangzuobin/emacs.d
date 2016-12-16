@@ -124,18 +124,7 @@
 (setq mac-option-key-is-meta nil)
 (setq mac-command-key-is-meta t)
 (setq mac-command-modifier 'meta)
-(setq mac-option-modifier 'alt)
-
-(global-set-key (kbd "A-a") 'beginning-of-buffer)
-(global-set-key (kbd "A-e") 'end-of-buffer)
-
-;;; make C-h and C-w same as in shell
-(global-set-key (kbd "C-h") 'delete-backward-char)
-(global-set-key (kbd "C-x ?") 'help-command)
-(global-set-key (kbd "C-w") 'backward-kill-word)
-(global-set-key (kbd "C-x C-k") 'kill-region)
-(global-set-key (kbd "C-+") 'text-scale-increase)
-(global-set-key (kbd "C--") 'text-scale-decrease)
+(setq mac-option-modifier 'super)
 
 ;;; replace buffer-menu with ibuffer
 (global-set-key (kbd "C-x C-b") 'ibuffer)
