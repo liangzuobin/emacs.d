@@ -136,7 +136,6 @@
 (global-set-key (kbd "C-x C-k") 'kill-region)
 (global-set-key (kbd "C-+") 'text-scale-increase)
 (global-set-key (kbd "C--") 'text-scale-decrease)
-(global-set-key (kbd "C-x C-o") 'find-file)
 
 ;;; replace buffer-menu with ibuffer
 (global-set-key (kbd "C-x C-b") 'ibuffer)
@@ -320,7 +319,8 @@
 ;;; Projectile: Project navigation and management library for Emacs
 (use-package projectile
   :config
-  (setq-default projectile-mode-line
+  (define-key projectile-mode-map [?\s-p] 'projectile-find-file)
+  (setq-default projectile-mode-line/com
   		'(:eval (if (file-remote-p default-directory)
   			    " Proj"
   			  (format " Proj[%s]" (projectile-project-name)))))
@@ -580,34 +580,6 @@
   :defer t
   :config (add-hook 'typescript-mode-hook #'tide-mode))
 
-;;; vim like actions
-; (defun vi-open-line-above ()
-;   "Insert a newline above the current line and put point at beginning."
-;   (interactive)
-;   (unless (bolp)
-;     (beginning-of-line))
-;   (newline)
-;   (forward-line -1)
-;   (indent-according-to-mode))
-
-; (defun vi-open-line-below ()
-;   "Insert a newline below the current line and put point at beginning."
-;   (interactive)
-;   (unless (eolp)
-;     (end-of-line))
-;   (newline-and-indent))
-
-; (defun vi-kill-current-line (&optional n)
-;   (interactive "p")
-;   (save-excursion
-;     (beginning-of-line)
-;     (let ((kill-whole-line t))
-;       (kill-line n))))
-
-; (global-set-key (kbd "C-S-o") 'vi-open-line-above)
-; (global-set-key (kbd "C-o") 'vi-open-line-below)
-; (global-set-key (kbd "M-DEL") 'vi-kill-current-line)
-
 (setq x-underline-at-descent-line t)
 
 ;;; mouse scroll
@@ -619,3 +591,6 @@
 (use-package evil)
 (evil-mode 1)
 (provide 'init-evil)
+
+(use-package evil-commentary)
+(evil-commentary-mode)
