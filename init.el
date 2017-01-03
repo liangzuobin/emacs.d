@@ -13,7 +13,10 @@
 	("marmalade" . "http://elpa.zilongshanren.com/marmalade/")
 	;; ("melpa" . "http://melpa.milkbox.net/packages/")
 	("melpa" . "http://elpa.zilongshanren.com/melpa/")))
+(setq package-enable-at-startup nil)
 (package-initialize)
+
+(elscreen-start)
 
 ;;; Emacs auto generated customization file
 (setq custom-file "~/.emacs.d/custom.el")
@@ -30,6 +33,7 @@
 	      initial-scratch-message ""
 	      ediff-split-window-function 'split-window-horizontally
 	      ediff-window-setup-function 'ediff-setup-windows-plain)
+
 
 (blink-cursor-mode 0)
 
@@ -135,6 +139,7 @@
   (package-install 'use-package))
 (unless (package-installed-p 'diminish)
   (package-install 'diminish))
+
 (require 'use-package)
 (setq use-package-always-ensure t)
 
@@ -274,6 +279,16 @@
   (save-place-mode 1))
 
 ;;; Elscreen: tabbed window session manager modeled after GNU screen
+(use-package elscreen
+  :if window-system
+  :config
+  (progn
+    (set-face-attribute 'elscreen-tab-background-face nil :inherit 'default :background nil)
+    (setq-default elscreen-tab-display-control nil)
+    (setq-default elscreen-tab-display-kill-screen nil)
+    (elscreen-set-prefix-key "\C-q")
+    (elscreen-start)))
+
 (use-package elscreen-persist
   :init
   (defcustom desktop-data-elscreen nil nil
@@ -292,10 +307,6 @@
   (add-hook 'desktop-save-hook 'desktop-prepare-data-elscreen!)
   (add-hook 'desktop-globals-to-save 'desktop-data-elscreen)
   (desktop-save-mode 1))
-
-(use-package elscreen
-  :if window-system
-  :config (elscreen-start))
 
 ;;; Projectile: Project navigation and management library for Emacs
 (use-package projectile
