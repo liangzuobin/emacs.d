@@ -138,8 +138,6 @@
 (require 'use-package)
 (setq use-package-always-ensure t)
 
-(elscreen-start)
-
 ;; Powerline
 (use-package powerline
   :config
@@ -275,16 +273,6 @@
     (use-package saveplace :init (setq-default save-place t))
   (save-place-mode 1))
 
-(use-package elscreen
-  :if window-system
-  :init
-  (progn
-    (set-face-attribute 'elscreen-tab-background-face nil :inherit 'default :background nil)
-    (setq-default elscreen-tab-display-control nil)
-    (setq-default elscreen-tab-display-kill-screen nil)
-    (elscreen-set-prefix-key "\C-q")
-    (elscreen-start)))
-
 ;;; Elscreen: tabbed window session manager modeled after GNU screen
 (use-package elscreen-persist
   :init
@@ -304,6 +292,10 @@
   (add-hook 'desktop-save-hook 'desktop-prepare-data-elscreen!)
   (add-hook 'desktop-globals-to-save 'desktop-data-elscreen)
   (desktop-save-mode 1))
+
+(use-package elscreen
+  :if window-system
+  :config (elscreen-start))
 
 ;;; Projectile: Project navigation and management library for Emacs
 (use-package projectile
