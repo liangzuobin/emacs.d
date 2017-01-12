@@ -533,6 +533,8 @@
   (add-hook 'go-mode-hook (lambda ()
 			    (set (make-local-variable 'company-backends)
 				 '(company-go))
+			    (set (make-local-variable 'compile-command)
+				 "go build -v && go test -v && go vet")
 			    (go-eldoc-setup)))
   (add-hook 'before-save-hook 'gofmt-before-save)
   (evil-define-key 'normal go-mode-map
