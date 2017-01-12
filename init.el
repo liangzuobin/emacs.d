@@ -586,3 +586,9 @@
 
 (use-package evil-commentary)
 (evil-commentary-mode)
+
+(setq tab-width 8)
+(setq-default indent-tabs-mode t)
+
+(require 'bash-completion)
+(bash-completion-setup)
