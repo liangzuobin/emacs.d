@@ -607,3 +607,4 @@
     '(require 'eshell-z nil t))
 
 (global-fasd-mode 1)
+(put 'erase-buffer 'disabled nil)
