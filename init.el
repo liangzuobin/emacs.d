@@ -228,12 +228,13 @@
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
 ;;; Highlight-indent-guides: similar to sublime-text
-; (use-package highlight-indent-guides
-;   :init (add-hook 'prog-mode-hook 'highlight-indent-guides-mode)
-;   :config
-;     (setq highlight-indent-guides-method 'character)
-;     (setq highlight-indent-guides-character ?\|)
-;     (set-face-foreground 'highlight-indent-guides-character-face "darkgray"))
+(use-package highlight-indent-guides
+  :init (add-hook 'prog-mode-hook 'highlight-indent-guides-mode)
+  :config
+    (setq highlight-indent-guides-method 'character)
+    (setq highlight-indent-guides-character ?\|)
+    (setq highlight-indent-guides-auto-enabled nil)
+    (set-face-foreground 'highlight-indent-guides-character-face "darkgray"))
 
 ;;; Highlight symbol
 (use-package highlight-symbol
@@ -534,7 +535,7 @@
 			    (set (make-local-variable 'company-backends)
 				 '(company-go))
 			    (set (make-local-variable 'compile-command)
-				 "go build -v && go test -v && go vet")
+				 "go build -v && go test -v && go vet && golint")
 			    (go-eldoc-setup)))
   (add-hook 'before-save-hook 'gofmt-before-save)
   (evil-define-key 'normal go-mode-map
@@ -601,3 +602,8 @@
   (autoload 'epe-theme-lambda "eshell-prompt-extras")
   (setq eshell-highlight-prompt nil
         eshell-prompt-function 'epe-theme-lambda))
+
+(eval-after-load 'eshell
+    '(require 'eshell-z nil t))
+
+(global-fasd-mode 1)
