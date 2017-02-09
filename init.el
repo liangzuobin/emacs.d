@@ -5,6 +5,11 @@
 ;; This is Tennix's Emacs configuration.
 ;; The latest version can be found at https://github.com/tennix/emacs.d
 
+(global-set-key (kbd "C-x ?") 'help-command)
+(global-set-key (kbd "C-h") 'delete-backward-char)
+(global-set-key (kbd "C-d") 'delete-char)
+(global-unset-key (kbd "C-x C-o"))
+
 ;;; Code:
 (setq package-archives
       '(;; ("gnu" . "http://elpa.gnu.org/packages/")
@@ -228,13 +233,14 @@
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
 ;;; Highlight-indent-guides: similar to sublime-text
-(use-package highlight-indent-guides
-  :init (add-hook 'prog-mode-hook 'highlight-indent-guides-mode)
-  :config
-    (setq highlight-indent-guides-method 'character)
-    (setq highlight-indent-guides-character ?\|)
-    (setq highlight-indent-guides-auto-enabled nil)
-    (set-face-foreground 'highlight-indent-guides-character-face "darkgray"))
+;; (use-package highlight-indent-guides
+;;   :init (add-hook 'prog-mode-hook 'highlight-indent-guides-mode)
+;;   :config
+;;     (setq highlight-indent-guides-method 'character)
+;;     (setq highlight-indent-guides-character ?\|)
+;;     (setq highlight-indent-guides-auto-enabled nil)
+;;     (setq highlight-indent-guides-auto-character-face-perc 0)
+;;     (set-face-foreground 'highlight-indent-guides-character-face "darkgray"))
 
 ;;; Highlight symbol
 (use-package highlight-symbol
@@ -312,7 +318,7 @@
 ;;; Projectile: Project navigation and management library for Emacs
 (use-package projectile
   :config
-  (define-key projectile-mode-map [?\s-p] 'projectile-find-file)
+  (define-key projectile-mode-map (kbd "C-x C-o") 'projectile-find-file)
   (setq-default projectile-mode-line/com
   		'(:eval (if (file-remote-p default-directory)
   			    " Proj"
