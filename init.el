@@ -383,23 +383,23 @@
 (use-package avy
   :bind (("C-;" . avy-goto-char-2)))
 
-;;; Flycheck for syntax check
-; (use-package flycheck
-;   :defer t
-;   :init
-;   (add-hook 'prog-mode-hook 'flycheck-mode)
-;   :config
-;   (setq flycheck-check-syntax-automatically '(save idle-change mode-enabled)
-; 	flycheck-idle-change-delay 0.8
-; 	flycheck-display-errors-function #'flycheck-display-error-messages-unless-error-list))
+;; Flycheck for syntax check
+ (use-package flycheck
+   :defer t
+   :init
+   (add-hook 'prog-mode-hook 'flycheck-mode)
+   :config
+   (setq flycheck-check-syntax-automatically '(save idle-change mode-enabled)
+ 	flycheck-idle-change-delay 0.8
+ 	flycheck-display-errors-function #'flycheck-display-error-messages-unless-error-list))
 
-;;; builtin flyspell for spell checking
-; (use-package flyspell
-;   :ensure t
-;   :diminish (flyspell-mode "FlyS")
-;   :init
-;   (add-hook 'prog-mode-hook 'flyspell-prog-mode)
-;   (add-hook 'text-mode-hook 'flyspell-mode))
+;; builtin flyspell for spell checking
+ (use-package flyspell
+   :ensure t
+   :diminish (flyspell-mode "FlyS")
+   :init
+   (add-hook 'prog-mode-hook 'flyspell-prog-mode)
+   (add-hook 'text-mode-hook 'flyspell-mode))
 
 ;;; Text search with grep, ag
 (use-package ag
