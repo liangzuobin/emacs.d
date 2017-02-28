@@ -12,12 +12,13 @@
 
 ;;; Code:
 (setq package-archives
-      '(;; ("gnu" . "http://elpa.gnu.org/packages/")
+      '( ;; ("gnu" . "http://elpa.gnu.org/packages/")
 	("gnu" . "http://elpa.zilongshanren.com/gnu/")
-	;; ("marmalade" . "http://marmalade-repo.org/packages/")
+	 ;; ("marmalade" . "http://marmalade-repo.org/packages/")
 	("marmalade" . "http://elpa.zilongshanren.com/marmalade/")
-	;; ("melpa" . "http://melpa.milkbox.net/packages/")
+	 ;; ("melpa" . "http://melpa.milkbox.net/packages/")
 	("melpa" . "http://elpa.zilongshanren.com/melpa/")))
+
 (setq package-enable-at-startup nil)
 (package-initialize)
 
@@ -151,8 +152,8 @@
 ;; Powerline
 (use-package powerline
   :config
-  ; (setq powerline-height 20)
-  ; (setq powerline-raw " ")
+  (setq powerline-height 16)
+  (setq powerline-raw " ")
   (setq ns-use-srgb-colorspace t)
   (powerline-raw mode-line-mule-info nil 'l)
   (setq powerline-default-separator nil)
@@ -394,12 +395,12 @@
  	flycheck-display-errors-function #'flycheck-display-error-messages-unless-error-list))
 
 ;; builtin flyspell for spell checking
- (use-package flyspell
-   :ensure t
-   :diminish (flyspell-mode "FlyS")
-   :init
-   (add-hook 'prog-mode-hook 'flyspell-prog-mode)
-   (add-hook 'text-mode-hook 'flyspell-mode))
+;; (use-package flyspell
+;;   :ensure t
+;;   :diminish (flyspell-mode "FlyS")
+;;   :init
+;;   (add-hook 'prog-mode-hook 'flyspell-prog-mode)
+;;   (add-hook 'text-mode-hook 'flyspell-prog-mode))
 
 ;;; Text search with grep, ag
 (use-package ag
@@ -421,6 +422,7 @@
   :config
   (git-gutter:linum-setup)
   (global-git-gutter-mode t))
+
 (use-package magit
   :bind (("C-x g" . magit-status)))
 
@@ -614,3 +616,5 @@
 
 (global-fasd-mode 1)
 (put 'erase-buffer 'disabled nil)
+
+(global-hl-line-mode t)
