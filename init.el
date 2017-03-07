@@ -618,3 +618,7 @@
 (put 'erase-buffer 'disabled nil)
 
 (global-hl-line-mode t)
+
+(setq display-buffer-function 'popwin:display-buffer)
+(push '("^\*go-direx:" :regexp t :position right :width 0.25 :dedicated t :stick t)
+      popwin:special-display-config)
