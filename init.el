@@ -109,7 +109,7 @@
 ;;; disable menu-bar, tool-bar, scroll-bar
 (toggle-scroll-bar -1)
 (tool-bar-mode -1)
-(fringe-mode -1)
+(fringe-mode '(4 . 0))
 
 ;;; copy current buffer filename to clipboard
 (defun copy-filename-to-clipboard ()
@@ -622,3 +622,53 @@
 (setq display-buffer-function 'popwin:display-buffer)
 (push '("^\*go-direx:" :regexp t :position right :width 0.25 :dedicated t :stick t)
       popwin:special-display-config)
+
+;; sr-speedbar config
+(require 'sr-speedbar)
+(setq speedbar-hide-button-brackets-flag t
+      speedbar-show-unknown-files t
+      speedbar-smart-directory-expand-flag t
+      speedbar-directory-button-trim-method 'trim
+      speedbar-use-images nil
+      speedbar-indentation-width 2
+      speedbar-use-imenu-flag t
+      speedbar-file-unshown-regexp "flycheck-.*"
+      sr-speedbar-width 40
+      sr-speedbar-width-x 40
+      sr-speedbar-auto-refresh nil
+      sr-speedbar-skip-other-window-p t
+      sr-speedbar-right-side nil)
+;; More familiar keymap settings.
+(add-hook 'speedbar-reconfigure-keymaps-hook
+          '(lambda ()
+             (define-key speedbar-mode-map [S-up] 'speedbar-up-directory)
+             (define-key speedbar-mode-map [right] 'speedbar-flush-expand-line)
+             (define-key speedbar-mode-map [left] 'speedbar-contract-line)))
+
+;; Always use the last selected window for loading files from speedbar.
+(defvar last-selected-window
+  (if (not (eq (selected-window) sr-speedbar-window))
+      (selected-window)
+    (other-window)))
+
+(defadvice select-window (after remember-selected-window activate)
+  "Remember the last selected window."
+  (unless (or (eq (selected-window) sr-speedbar-window) (not (window-live-p (selected-window))))
+    (setq last-selected-window (selected-window))))
+
+(defun sr-speedbar-before-visiting-file-hook ()
+  "Function that hooks `speedbar-before-visiting-file-hook'."
+  (select-window last-selected-window))
+
+(defun sr-speedbar-before-visiting-tag-hook ()
+  "Function that hooks `speedbar-before-visiting-tag-hook'."
+  (select-window last-selected-window))
+
+(defun sr-speedbar-visiting-file-hook ()
+  "Function that hooks `speedbar-visiting-file-hook'."
+  (select-window last-selected-window))
+
+(defun sr-speedbar-visiting-tag-hook ()
+  "Function that hooks `speedbar-visiting-tag-hook'."
+  (select-window last-selected-window))
+(provide 'init-speedbar)
