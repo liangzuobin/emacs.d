@@ -109,7 +109,7 @@
 ;;; disable menu-bar, tool-bar, scroll-bar
 (toggle-scroll-bar -1)
 (tool-bar-mode -1)
-(fringe-mode '(4 . 0))
+(fringe-mode '(8 . 0))
 
 ;;; copy current buffer filename to clipboard
 (defun copy-filename-to-clipboard ()
@@ -617,7 +617,7 @@
 (global-fasd-mode 1)
 (put 'erase-buffer 'disabled nil)
 
-(global-hl-line-mode t)
+;; (global-hl-line-mode t)
 
 (setq display-buffer-function 'popwin:display-buffer)
 (push '("^\*go-direx:" :regexp t :position right :width 0.25 :dedicated t :stick t)
