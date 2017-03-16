@@ -40,7 +40,7 @@
 	      ediff-split-window-function 'split-window-horizontally
 	      ediff-window-setup-function 'ediff-setup-windows-plain)
 
-(setq-default line-spacing 0.25)
+(setq-default line-spacing 0.2)
 
 (blink-cursor-mode 0)
 
