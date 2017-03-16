@@ -40,6 +40,8 @@
 	      ediff-split-window-function 'split-window-horizontally
 	      ediff-window-setup-function 'ediff-setup-windows-plain)
 
+(add-text-properties (point-min) (point-max)
+     '(line-spacing 0.25 line-height 1.25))
 
 (blink-cursor-mode 0)
 
@@ -109,7 +111,7 @@
 ;;; disable menu-bar, tool-bar, scroll-bar
 (toggle-scroll-bar -1)
 (tool-bar-mode -1)
-(fringe-mode '(8 . 0))
+(fringe-mode '(12 . 0))
 
 ;;; copy current buffer filename to clipboard
 (defun copy-filename-to-clipboard ()
