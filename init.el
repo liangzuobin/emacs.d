@@ -40,13 +40,13 @@
 	      ediff-split-window-function 'split-window-horizontally
 	      ediff-window-setup-function 'ediff-setup-windows-plain)
 
-(setq-default line-spacing 0.2)
+; (setq-default line-spacing 0.2)
 
 (blink-cursor-mode 0)
 
 ;;; prettify symbol mode,
 ;;; Eg: lambda will be replaced by Greek letter lambda
-(global-prettify-symbols-mode)
+; (global-prettify-symbols-mode)
 
 ;;; builtin parenthesis editing
 (electric-pair-mode) ;; replaced with smartparens-mode
@@ -124,12 +124,12 @@
       (message "Copied buffer file name '%s' to the clipboard." filename))))
 
 ;;; kill current line when no region is active
-(defadvice kill-region (before slick-cut activate compile)
-  "When called interactively with no active region, kill current line."
-  (interactive
-   (if mark-active (list (region-beginning) (region-end))
-     (list (line-beginning-position)
-	   (line-beginning-position 2)))))
+; (defadvice kill-region (before slick-cut activate compile)
+;   "When called interactively with no active region, kill current line."
+;   (interactive
+;    (if mark-active (list (region-beginning) (region-end))
+;      (list (line-beginning-position)
+; 	   (line-beginning-position 2)))))
 
 ;;; I prefer cmd key for meta
 (setq mac-option-key-is-meta nil)
@@ -179,17 +179,17 @@
   (setq solarized-use-variable-pitch nil
 	solarized-scale-org-headlines nil
 	solarized-high-contrast-mode-line t)
-  (setq solarized-distinct-fringe-background t)
+  (setq solarized-distinct-fringe-background nil)
   (setq solarized-use-variable-pitch nil)
   (setq solarized-high-contrast-mode-line t)
   (setq solarized-use-less-bold t)
   (setq solarized-emphasize-indicators nil)
   (setq solarized-scale-org-headlines nil)
-  (setq solarized-height-minus-1 1)
-  (setq solarized-height-plus-1 1)
-  (setq solarized-height-plus-2 1)
-  (setq solarized-height-plus-3 1)
-  (setq solarized-height-plus-4 1)
+  ; (setq solarized-height-minus-1 1)
+  ; (setq solarized-height-plus-1 1)
+  ; (setq solarized-height-plus-2 1)
+  ; (setq solarized-height-plus-3 1)
+  ; (setq solarized-height-plus-4 1)
   (load-theme 'solarized-light t))
 (add-hook 'after-make-frame-functions
           (lambda (frame)
@@ -235,24 +235,24 @@
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
 ;;; Highlight-indent-guides: similar to sublime-text
-;; (use-package highlight-indent-guides
-;;   :init (add-hook 'prog-mode-hook 'highlight-indent-guides-mode)
-;;   :config
-;;     (setq highlight-indent-guides-method 'character)
-;;     (setq highlight-indent-guides-character ?\|)
-;;     (setq highlight-indent-guides-auto-enabled nil)
-;;     (setq highlight-indent-guides-auto-character-face-perc 0)
-;;     (set-face-foreground 'highlight-indent-guides-character-face "darkgray"))
+; (use-package highlight-indent-guides
+;   :init (add-hook 'prog-mode-hook 'highlight-indent-guides-mode)
+;   :config
+;     (setq highlight-indent-guides-method 'character)
+;     (setq highlight-indent-guides-character ?\|)
+;     (setq highlight-indent-guides-auto-enabled nil)
+;     (setq highlight-indent-guides-auto-character-face-perc 0)
+;     (set-face-foreground 'highlight-indent-guides-character-face "gray"))
 
 ;;; Highlight symbol
-(use-package highlight-symbol
-  :diminish highlight-symbol-mode
-  :bind (("C-x M-p" . highlight-symbol-prev)
-	 ("C-x M-n" . highlight-symbol-next)
-	 ("C-x M-r" . highlight-symbol-query-replace))
-  :init
-  (add-hook 'prog-mode-hook 'highlight-symbol-mode)
-  (add-hook 'prog-mode-hook 'highlight-symbol-nav-mode))
+; (use-package highlight-symbol
+;   :diminish highlight-symbol-mode
+;   :bind (("C-x M-p" . highlight-symbol-prev)
+; 	 ("C-x M-n" . highlight-symbol-next)
+; 	 ("C-x M-r" . highlight-symbol-query-replace))
+;   :init
+;   (add-hook 'prog-mode-hook 'highlight-symbol-mode)
+;   (add-hook 'prog-mode-hook 'highlight-symbol-nav-mode))
 
 ;;; smartparens: strcutural parenthesis editing
 (use-package smartparens
@@ -263,12 +263,12 @@
   (require 'smartparens-config))
 
 ;;; origami: code folding
-(use-package origami
-  :diminish origami
-  :bind (:map origami-mode-map
-	      ("C-c f" . origami-recursively-toggle-node)
-	      ("C-c F" . origami-toggle-all-nodes))
-  :init (add-hook 'prog-mode-hook 'origami-mode))
+; (use-package origami
+;   :diminish origami
+;   :bind (:map origami-mode-map
+; 	      ("C-c f" . origami-recursively-toggle-node)
+; 	      ("C-c F" . origami-toggle-all-nodes))
+;   :init (add-hook 'prog-mode-hook 'origami-mode))
 
 ;;; undo-tree: [C-x u] opens undo tree
 (use-package undo-tree
@@ -416,13 +416,13 @@
 (use-package wgrep-ag :defer t)
 
 ;;; Git
-(use-package git-gutter
-  :diminish git-gutter-mode
-  :bind (("C-x p" . git-gutter:previous-hunk)
-	 ("C-x n" . git-gutter:next-hunk))
-  :config
-  (git-gutter:linum-setup)
-  (global-git-gutter-mode t))
+; (use-package git-gutter
+;   :diminish git-gutter-mode
+;   :bind (("C-x p" . git-gutter:previous-hunk)
+; 	 ("C-x n" . git-gutter:next-hunk))
+;   :config
+;   (git-gutter:linum-setup)
+;   (global-git-gutter-mode t))
 
 (use-package magit
   :bind (("C-x g" . magit-status)))
@@ -586,11 +586,6 @@
 
 (setq x-underline-at-descent-line t)
 
-;;; mouse scroll
-(setq scroll-conservatively 101)
-(setq mouse-wheel-scroll-amount '(1))
-(setq mouse-wheel-progressive-speed nil)
-
 ;;; finally, evilized
 (use-package evil)
 (evil-mode 1)
@@ -617,59 +612,3 @@
 
 (global-fasd-mode 1)
 (put 'erase-buffer 'disabled nil)
-
-;; (global-hl-line-mode t)
-
-(setq display-buffer-function 'popwin:display-buffer)
-(push '("^\*go-direx:" :regexp t :position right :width 0.25 :dedicated t :stick t)
-      popwin:special-display-config)
-
-;; sr-speedbar config
-(require 'sr-speedbar)
-(setq speedbar-hide-button-brackets-flag t
-      speedbar-show-unknown-files t
-      speedbar-smart-directory-expand-flag t
-      speedbar-directory-button-trim-method 'trim
-      speedbar-use-images nil
-      speedbar-indentation-width 2
-      speedbar-use-imenu-flag t
-      speedbar-file-unshown-regexp "flycheck-.*"
-      sr-speedbar-width 40
-      sr-speedbar-width-x 40
-      sr-speedbar-auto-refresh nil
-      sr-speedbar-skip-other-window-p t
-      sr-speedbar-right-side nil)
-;; More familiar keymap settings.
-(add-hook 'speedbar-reconfigure-keymaps-hook
-          '(lambda ()
-             (define-key speedbar-mode-map [S-up] 'speedbar-up-directory)
-             (define-key speedbar-mode-map [right] 'speedbar-flush-expand-line)
-             (define-key speedbar-mode-map [left] 'speedbar-contract-line)))
-
-;; Always use the last selected window for loading files from speedbar.
-(defvar last-selected-window
-  (if (not (eq (selected-window) sr-speedbar-window))
-      (selected-window)
-    (other-window)))
-
-(defadvice select-window (after remember-selected-window activate)
-  "Remember the last selected window."
-  (unless (or (eq (selected-window) sr-speedbar-window) (not (window-live-p (selected-window))))
-    (setq last-selected-window (selected-window))))
-
-(defun sr-speedbar-before-visiting-file-hook ()
-  "Function that hooks `speedbar-before-visiting-file-hook'."
-  (select-window last-selected-window))
-
-(defun sr-speedbar-before-visiting-tag-hook ()
-  "Function that hooks `speedbar-before-visiting-tag-hook'."
-  (select-window last-selected-window))
-
-(defun sr-speedbar-visiting-file-hook ()
-  "Function that hooks `speedbar-visiting-file-hook'."
-  (select-window last-selected-window))
-
-(defun sr-speedbar-visiting-tag-hook ()
-  "Function that hooks `speedbar-visiting-tag-hook'."
-  (select-window last-selected-window))
-(provide 'init-speedbar)
