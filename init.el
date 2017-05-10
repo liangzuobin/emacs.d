@@ -44,6 +44,10 @@
 
 (blink-cursor-mode 0)
 
+(setq tab-width 8)
+(setq-default indent-tabs-mode t)
+
+
 ;;; prettify symbol mode,
 ;;; Eg: lambda will be replaced by Greek letter lambda
 ; (global-prettify-symbols-mode)
@@ -110,7 +114,7 @@
 ;;; disable menu-bar, tool-bar, scroll-bar
 (toggle-scroll-bar -1)
 (tool-bar-mode -1)
-(fringe-mode '(12 . 0))
+(fringe-mode '(20 . 0))
 
 ;;; copy current buffer filename to clipboard
 (defun copy-filename-to-clipboard ()
@@ -392,7 +396,7 @@
    (add-hook 'prog-mode-hook 'flycheck-mode)
    :config
    (setq flycheck-check-syntax-automatically '(save idle-change mode-enabled)
- 	flycheck-idle-change-delay 0.8
+ 	flycheck-idle-change-delay 0.5
  	flycheck-display-errors-function #'flycheck-display-error-messages-unless-error-list))
 
 ;; builtin flyspell for spell checking
@@ -593,9 +597,6 @@
 
 (use-package evil-commentary)
 (evil-commentary-mode)
-
-(setq tab-width 8)
-(setq-default indent-tabs-mode t)
 
 (require 'bash-completion)
 (bash-completion-setup)
