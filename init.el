@@ -114,7 +114,7 @@
 ;;; disable menu-bar, tool-bar, scroll-bar
 (toggle-scroll-bar -1)
 (tool-bar-mode -1)
-(fringe-mode '(20 . 0))
+(fringe-mode '(16 . 0))
 
 ;;; copy current buffer filename to clipboard
 (defun copy-filename-to-clipboard ()
@@ -213,9 +213,9 @@
   :init (setq load-prefer-newer t)
   :config (auto-compile-on-load-mode))
 
-;;; external linum mode, better performance than builtin linum mode
-(use-package nlinum
-  :config (global-nlinum-mode))
+;; external linum mode, better performance than builtin linum mode
+ ; (use-package nlinum
+ ;   :config (global-nlinum-mode))
 
 ;; guide-key: hint for shortcut keys
 (use-package guide-key
@@ -345,8 +345,10 @@
   :init
   (add-hook 'prog-mode-hook 'company-mode)
   :config
-  (setq company-idle-delay 0.3)
-  (setq company-tooltip-align-annotations t))
+  (setq company-idle-delay 0.2)
+  (setq company-tooltip-align-annotations t)
+  (define-key company-active-map (kbd "C-n") 'company-select-next)
+  (define-key company-active-map (kbd "C-p") 'company-select-previous))
 
 ;;; smex used with counsel
 (use-package smex
@@ -432,18 +434,18 @@
   :bind (("C-x g" . magit-status)))
 
 ;;; org mode
-(use-package org-bullets :defer t)
-(use-package org
-  :defer t
-  :init
-  (setq org-hide-emphasis-markers t)
-  (add-hook 'org-mode-hook 'org-bullets-mode)
-  (font-lock-add-keywords 'org-mode
-			  '(("^ +\\([-*]\\) "
-			     (0 (prog1 ()
-				  (compose-region
-				   (match-beginning 1)
-				   (match-end 1) "•")))))))
+; (use-package org-bullets :defer t)
+; (use-package org
+;   :defer t
+;   :init
+;   (setq org-hide-emphasis-markers t)
+;   (add-hook 'org-mode-hook 'org-bullets-mode)
+;   (font-lock-add-keywords 'org-mode
+; 			  '(("^ +\\([-*]\\) "
+; 			     (0 (prog1 ()
+; 				  (compose-region
+; 				   (match-beginning 1)
+; 				   (match-end 1) "•")))))))
 
 ;;; Syntax highlighting for common configuration file formats ;;;
 (use-package dockerfile-mode :defer t)
